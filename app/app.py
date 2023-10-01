@@ -1,16 +1,13 @@
 from flask import Flask, render_template, request
 from pymongo import MongoClient
 
+
 app = Flask(__name__)
 
 # Connect to your MongoDB instance
 client = MongoClient('mongodb://root:3yGWpZ7jeS@34.78.116.136:27017/')
 db = client['matan_project']
 collection = db['links']
-
-@app.template_filter('zip_lists')
-def zip_lists(a, b):
-    return zip(a, b)
 
 @app.route('/')
 def index():
