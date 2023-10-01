@@ -3,19 +3,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: matan-app  # Use a static name for debugging
+  name: matan-ap  # Use a static name for debugging
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: matan-app
+      app: matan-ap
   template:
     metadata:
       labels:
-        app: matan-app
+        app: matan-ap
     spec:
       containers:
-        - name: matan-app
+        - name: matan-ap
           image: matanzh/web-app:8.0  # Updated image to matanzh/web-app:latest
           ports:
             - containerPort: 5001
