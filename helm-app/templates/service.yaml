@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: matan-app-service
+  name: matan-app-servic
 spec:
   selector:
-    app: matan-app
+    app: matan-ap
   type: LoadBalancer
   ports:
     - port: 5001
