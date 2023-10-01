@@ -1,11 +1,9 @@
-# deployment.yaml for My App
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: matan-app  # Use a static name for debugging
+  name: matan-app
 spec:
-  replicas: 2
+  replicas: 2  # Number of desired replicas
   selector:
     matchLabels:
       app: matan-app
@@ -15,7 +13,8 @@ spec:
         app: matan-app
     spec:
       containers:
-        - name: matan-app
-          image: matanzh/web-app:8.0  # Updated image to matanzh/web-app:latest
-          ports:
-            - containerPort: 5001
+      - name: matan-app
+        image: matanzh/web-app:8.0  # Specify your Docker image
+        ports:
+        - containerPort: 5001  # Port your Flask app is listening on
+
