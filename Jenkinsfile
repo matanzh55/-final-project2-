@@ -11,22 +11,35 @@ pipeline {
             }
  
     stages {
+          stage('Checkout Code') {
+            steps {
+                   checkout([$class: 'GitSCM', branches: [[name: 'main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'matan_git_hub_creds', url: "${GITHUB_REPO_URL}"]]])
+            }
+          }
         stage('Build Docker Image') {
             steps {
                   container('dind') {
                                   script {
-                                      checkout([$class: 'GitSCM', branches: [[name: 'feature-branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'matan_git_hub_creds', url: "${GITHUB_REPO_URL}"]]])
+                                          echo "started building image...."
+                                          sh 'dockerd &'
+                                          sh 'sleep 8'
                                           sh "docker build -t ${IMAGE_NAME} ."
-                                          withCredentials([usernamePassword(credentialsId: 'matan_docker_hub_creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                                          sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-                                              // Push the Docker image to Docker Hub
-                                          sh "docker push ${IMAGE_NAME}"
-                                          }
+                                        echo "finished"
                                   }
+                        }
                     }
                 }
+          stage('Push Docker Image') {
+            steps {
+                container('dind') {
+                        withCredentials([usernamePassword(credentialsId: 'matan_docker_hub_creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                        sh "docker push ${IMAGE_NAME}"
+                                          }
             }
         }
+      }
+    }
 
         // Additional stages or steps can be added as needed
     }
