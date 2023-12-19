@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: matan-app
-          image: matanzh/web-app:8.0  # Updated image to matanzh/web-app:8.0
+          image: matanzh/web-app:8.1  
           ports:
             - containerPort: 5001
