@@ -7,7 +7,7 @@ pipeline {
         }
             environment {
                 GITHUB_REPO_URL = 'https://github.com/matanzh55/final_project2'  // Replace with your GitHub repository URL
-                IMAGE_NAME = 'matanzh/web-app:8.0'  // Specify your Docker Hub image name and tag
+                IMAGE_NAME = 'matanzh/web-app:8.1'  // Specify your Docker Hub image name and tag
             }
  
     stages {
@@ -15,9 +15,9 @@ pipeline {
             steps {
                   container('dind') {
                                   script {
-                                      checkout([$class: 'GitSCM', branches: [[name: 'feature-branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'matan-github', url: "${GITHUB_REPO_URL}"]]])
+                                      checkout([$class: 'GitSCM', branches: [[name: 'feature-branch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'matan_git_hub_creds', url: "${GITHUB_REPO_URL}"]]])
                                           sh "docker build -t ${IMAGE_NAME} ."
-                                          withCredentials([usernamePassword(credentialsId: 'matan-dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                                          withCredentials([usernamePassword(credentialsId: 'matan_docker_hub_creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                                           sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
                                               // Push the Docker image to Docker Hub
                                           sh "docker push ${IMAGE_NAME}"
