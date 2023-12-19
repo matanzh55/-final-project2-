@@ -3,7 +3,7 @@ kind: Pod
 spec:
   containers:
   - name: dind
-    image: drpsychick/dind-buildx-helm
+    image: drpsychick/dind-buildx-helm:v1.19.4
     alwaysPull: true
     securityContext:
       privileged: true
