@@ -6,7 +6,7 @@ pipeline {
             }
         }
             environment {
-                GITHUB_REPO_URL = 'https://github.com/matanzh55/final_project2'  // Replace with your GitHub repository URL
+                GITHUB_REPO_URL = 'https://github.com/matanzh55/final_project2.git'  // Replace with your GitHub repository URL
                 IMAGE_NAME = 'matanzh/web-app:8.1'  // Specify your Docker Hub image name and tag
             }
  
