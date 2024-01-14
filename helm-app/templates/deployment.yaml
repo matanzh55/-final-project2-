@@ -1,0 +1,21 @@
+# deployment.yaml for My App
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matan-app  # Use a static name for debugging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: matan-app
+  template:
+    metadata:
+      labels:
+        app: matan-app
+    spec:
+      containers:
+        - name: matan-app
+          image: matanzh/web-app:8.1  
+          ports:
+            - containerPort: 5001
